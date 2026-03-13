@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Aluno;
+use App\Models\Venda;
 
-class AlunoSeeder extends Seeder
+class VendaSeeder extends Seeder
 {
     public function run(): void
     {
-        Aluno::factory()->count(10)->create();
+        Venda::factory()->count(20)->create();
     }
 }
