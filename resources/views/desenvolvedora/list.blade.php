@@ -1,12 +1,12 @@
 @extends('main')
-@section('titulo', 'Listagem de alunos')
+@section('titulo', 'Listagem de desenvolvedoras')
 @section('conteudo')
 
-    <h4>Listagem de Alunos</h4>
+    <h4>Listagem de Desenvolvedoras</h4>
 
     <div class="row">
         <div class="col">
-            <form action="{{ route('aluno.search') }}" method="post">
+            <form action="{{ route('desenvolvedora.search') }}" method="post">
                 @csrf
                 <div class="row">
 
@@ -14,8 +14,8 @@
                         <label class="form-label">Tipo</label>
                         <select name="tipo" class="form-select">
                             <option value="nome">Nome</option>
-                            <option value="cpf">CPF</option>
-                            <option value="telefone">Telefone</option>
+                            <option value="pais">País</option>
+                            <option value="ano_fundacao">Ano de Fundação</option>
                         </select>
                     </div>
                     <div class="col-md-3">
@@ -26,7 +26,7 @@
                         <button type="submit" class="btn btn-primary"> Buscar</button>
                     </div>
                     <div class="col-md-3">
-                        <a href="{{ url('aluno/create') }}" class="btn btn-success"> Novo</a>
+                        <a href="{{ url('desenvolvedora/create') }}" class="btn btn-success"> Novo</a>
                     </div>
                 </div>
             </form>
@@ -40,8 +40,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nome</th>
-                        <th scope="col">CPF</th>
-                        <th scope="col">Telefone</th>
+                        <th scope="col">País</th>
+                        <th scope="col">Ano de Fundação</th>
                         <th scope="col">Ação</th>
                         <th scope="col">Ação</th>
                     </tr>
@@ -51,11 +51,11 @@
                         <tr>
                             <th scope="row">{{ $item->id }}</th>
                             <td>{{ $item->nome }}</td>
-                            <td>{{ $item->cpf }}</td>
-                            <td>{{ $item->telefone }}</td>
-                            <td><a href="{{ route('aluno.edit', $item->id) }}" class="btn btn-warning">Editar</a></td>
+                            <td>{{ $item->pais }}</td>
+                            <td>{{ $item->ano_fundacao }}</td>
+                            <td><a href="{{ route('desenvolvedora.edit', $item->id) }}" class="btn btn-warning">Editar</a></td>
                             <td>
-                                <form action="{{ route('aluno.destroy', $item->id) }}" method="post">
+                                <form action="{{ route('desenvolvedora.destroy', $item->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"

@@ -1,14 +1,14 @@
 @extends('main')
-@section('titulo', 'Formulário Aluno')
+@section('titulo', 'Formulário Desenvolvedora')
 @section('conteudo')
 
-    <h4>Formulário Aluno</h4>
+    <h4>Formulário Desenvolvedora</h4>
 
     @php
         if (!empty($dado->id)) {
-            $action = route('aluno.update', $dado->id);
+            $action = route('desenvolvedora.update', $dado->id);
         } else {
-            $action = route('aluno.store');
+            $action = route('desenvolvedora.store');
         }
     @endphp
 
@@ -24,19 +24,19 @@
                 <input type="text" class="form-control" name="nome" value="{{ old('nome', $dado->nome ?? '') }}">
             </div>
             <div class="col">
-                <label for="telefone" class="form-label">Telefone</label>
-                <input type="text" class="form-control" name="telefone"
-                    value="{{ old('telefone', $dado->telefone ?? '') }}">
+                <label for="pais" class="form-label">País</label>
+                <input type="text" class="form-control" name="pais"
+                    value="{{ old('pais', $dado->pais ?? '') }}">
             </div>
             <div class="col">
-                <label class="form-label" for="cpf">CPF</label>
-                <input type="text" class="form-control" name="cpf" value="{{ old('cpf', $dado->cpf ?? '') }}">
+                <label class="form-label" for="ano_fundacao">Ano de Fundação</label>
+                <input type="text" class="form-control" name="ano_fundacao" value="{{ old('ano_fundacao', $dado->ano_fundacao ?? '') }}">
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <button type="submit" class="btn btn-success">Salvar</button>
-                <a href="{{ url('aluno') }}" class="btn btn-primary">Voltar</a>
+                <a href="{{ url('desenvolvedora') }}" class="btn btn-primary">Voltar</a>
             </div>
         </div>
     </form>
