@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nome', 100);
             $table->string('pais', 80);
             $table->integer('ano_fundacao');
+            $table->string('site_oficial', 150)->nullable();
+            $table->integer('numero_funcionarios')->default(0);
             $table->timestamps();
         });
     }

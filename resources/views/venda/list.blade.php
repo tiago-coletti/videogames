@@ -40,9 +40,9 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Cliente (ID)</th>
-                        <th scope="col">Vendedor (ID)</th>
-                        <th scope="col">Jogo (ID)</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Vendedor</th>
+                        <th scope="col">Jogo</th>
                         <th scope="col">Data da Venda</th>
                         <th scope="col">Valor Total</th>
                         <th scope="col">Ação</th>
@@ -53,9 +53,9 @@
                     @foreach ($dados as $item)
                         <tr>
                             <th scope="row">{{ $item->id }}</th>
-                            <td>{{ $item->cliente_id }}</td>
-                            <td>{{ $item->vendedor_id }}</td>
-                            <td>{{ $item->jogo_id }}</td>
+                            <td>{{ $item->cliente->nome ?? $item->cliente_id }}</td>
+                            <td>{{ $item->vendedor->nome ?? $item->vendedor_id }}</td>
+                            <td>{{ $item->jogo->nome ?? $item->jogo_id }}</td>
                             <td>{{ $item->data_venda }}</td>
                             <td>{{ $item->valor_total }}</td>
                             <td><a href="{{ route('venda.edit', $item->id) }}" class="btn btn-warning">Editar</a></td>

@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Plataforma extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'nome',
         'fabricante',
-        'ano_lancamento'
+        'ano_lancamento',
+        'tipo',
+        'preco_lancamento'
     ];
 }

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nome', 100);
             $table->string('fabricante', 100);
             $table->integer('ano_lancamento');
+            $table->string('tipo', 50);
+            $table->decimal('preco_lancamento', 10, 2);
             $table->timestamps();
         });
     }

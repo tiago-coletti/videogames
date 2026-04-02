@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Venda;
+use App\Models\Cliente;
+use App\Models\Vendedor;
+use App\Models\Jogo;
 
 class VendaController extends Controller
 {
@@ -12,16 +15,16 @@ class VendaController extends Controller
     {
         $dados = Venda::all(); //select * from vendas
 
-        // dd($dados);
-        //var_dump($dados);
-        //  exit;
-
         return view('venda.list', ['dados' => $dados]);
     }
 
     function create()
     {
-        return view('venda.form');
+        $clientes = Cliente::all();
+        $vendedores = Vendedor::all();
+        $jogos = Jogo::all();
+
+        return view('venda.form', compact('clientes', 'vendedores', 'jogos'));
     }
 
     function store(Request $request)
@@ -40,7 +43,7 @@ class VendaController extends Controller
             'valor_total' => "O :attribute é obrigatório",
         ]);
 
-        Venda::create($request->all());
+        Venda::create($request->except(['_token', '_method']));
 
         return redirect('venda');
     }
@@ -48,7 +51,11 @@ class VendaController extends Controller
     function edit($id)
     {
         $dado = Venda::find($id);
-        return view('venda.form', ['dado' => $dado]);
+        $clientes = Cliente::all();
+        $vendedores = Vendedor::all();
+        $jogos = Jogo::all();
+
+        return view('venda.form', compact('dado', 'clientes', 'vendedores', 'jogos'));
     }
 
     function update(Request $request, $id)
@@ -67,7 +74,7 @@ class VendaController extends Controller
             'valor_total' => "O :attribute é obrigatório",
         ]);
 
-        Venda::find($id)->update($request->all());
+        Venda::find($id)->update($request->except(['_token', '_method', 'id']));
 
         return redirect('venda');
     }

@@ -11,11 +11,12 @@
                 <div class="row">
 
                     <div class="col-md-3">
-                        <label class="form-label">Tipo</label>
+                        <label class="form-label">Tipo de Busca</label>
                         <select name="tipo" class="form-select">
                             <option value="nome">Nome</option>
                             <option value="fabricante">Fabricante</option>
                             <option value="ano_lancamento">Ano de Lançamento</option>
+                            <option value="tipo">Tipo</option>
                         </select>
                     </div>
                     <div class="col-md-3">
@@ -41,7 +42,9 @@
                         <th scope="col">#</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Fabricante</th>
-                        <th scope="col">Ano de Lançamento</th>
+                        <th scope="col">Ano</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Preço</th>
                         <th scope="col">Ação</th>
                         <th scope="col">Ação</th>
                     </tr>
@@ -53,6 +56,8 @@
                             <td>{{ $item->nome }}</td>
                             <td>{{ $item->fabricante }}</td>
                             <td>{{ $item->ano_lancamento }}</td>
+                            <td>{{ $item->tipo }}</td>
+                            <td>{{ $item->preco_lancamento }}</td>
                             <td><a href="{{ route('plataforma.edit', $item->id) }}" class="btn btn-warning">Editar</a></td>
                             <td>
                                 <form action="{{ route('plataforma.destroy', $item->id) }}" method="post">

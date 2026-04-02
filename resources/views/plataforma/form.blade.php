@@ -33,6 +33,16 @@
                 <input type="text" class="form-control" name="ano_lancamento" value="{{ old('ano_lancamento', $dado->ano_lancamento ?? '') }}">
             </div>
         </div>
+        <div class="row mt-3">
+            <div class="col">
+                <label for="tipo" class="form-label">Tipo</label>
+                <input type="text" class="form-control" name="tipo" value="{{ old('tipo', $dado->tipo ?? '') }}">
+            </div>
+            <div class="col">
+                <label for="preco_lancamento" class="form-label">Preço de Lançamento</label>
+                <input type="text" class="form-control" name="preco_lancamento" value="{{ old('preco_lancamento', $dado->preco_lancamento ?? '') }}">
+            </div>
+        </div>
         <div class="row mt-4">
             <div class="col">
                 <button type="submit" class="btn btn-success">Salvar</button>

@@ -33,7 +33,17 @@
                 <input type="text" class="form-control" name="ano_fundacao" value="{{ old('ano_fundacao', $dado->ano_fundacao ?? '') }}">
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
+            <div class="col">
+                <label for="site_oficial" class="form-label">Site Oficial</label>
+                <input type="text" class="form-control" name="site_oficial" value="{{ old('site_oficial', $dado->site_oficial ?? '') }}">
+            </div>
+            <div class="col">
+                <label for="numero_funcionarios" class="form-label">Número de Funcionários</label>
+                <input type="text" class="form-control" name="numero_funcionarios" value="{{ old('numero_funcionarios', $dado->numero_funcionarios ?? '') }}">
+            </div>
+        </div>
+        <div class="row mt-3">
             <div class="col">
                 <button type="submit" class="btn btn-success">Salvar</button>
                 <a href="{{ url('desenvolvedora') }}" class="btn btn-primary">Voltar</a>

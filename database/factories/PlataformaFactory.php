@@ -16,6 +16,8 @@ class PlataformaFactory extends Factory
             'nome' => $this->faker->word(),
             'fabricante' => $this->faker->company(),
             'ano_lancamento' => $this->faker->numberBetween(1980, 2026),
+            'tipo' => $this->faker->randomElement(['Console', 'PC', 'Handheld', 'Mobile']),
+            'preco_lancamento' => $this->faker->randomFloat(2, 199, 599),
         ];
     }
 }

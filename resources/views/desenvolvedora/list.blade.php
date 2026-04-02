@@ -16,6 +16,8 @@
                             <option value="nome">Nome</option>
                             <option value="pais">País</option>
                             <option value="ano_fundacao">Ano de Fundação</option>
+                            <option value="site_oficial">Site Oficial</option>
+                            <option value="numero_funcionarios">Número de Funcionários</option>
                         </select>
                     </div>
                     <div class="col-md-3">
@@ -42,6 +44,8 @@
                         <th scope="col">Nome</th>
                         <th scope="col">País</th>
                         <th scope="col">Ano de Fundação</th>
+                        <th scope="col">Site Oficial</th>
+                        <th scope="col">Funcionários</th>
                         <th scope="col">Ação</th>
                         <th scope="col">Ação</th>
                     </tr>
@@ -53,6 +57,8 @@
                             <td>{{ $item->nome }}</td>
                             <td>{{ $item->pais }}</td>
                             <td>{{ $item->ano_fundacao }}</td>
+                            <td>{{ $item->site_oficial }}</td>
+                            <td>{{ $item->numero_funcionarios }}</td>
                             <td><a href="{{ route('desenvolvedora.edit', $item->id) }}" class="btn btn-warning">Editar</a></td>
                             <td>
                                 <form action="{{ route('desenvolvedora.destroy', $item->id) }}" method="post">

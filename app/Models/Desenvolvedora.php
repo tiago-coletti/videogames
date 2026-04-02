@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Desenvolvedora extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'nome',
         'pais',
-        'ano_fundacao'
+        'ano_fundacao',
+        'site_oficial',
+        'numero_funcionarios'  
     ];
 }

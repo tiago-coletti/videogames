@@ -16,6 +16,8 @@ class DesenvolvedoraFactory extends Factory
             'nome' => $this->faker->company(),
             'pais' => $this->faker->country(),
             'ano_fundacao' => $this->faker->numberBetween(1970, 2026),
+            'site_oficial' => $this->faker->url(),
+            'numero_funcionarios' => $this->faker->numberBetween(10, 5000),
         ];
     }
 }

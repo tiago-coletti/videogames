@@ -20,17 +20,37 @@
         <div class="row">
             <input type="hidden" name="id" value="{{ $dado->id ?? '' }}">
             <div class="col">
-                <label for="cliente_id" class="form-label">ID do Cliente</label>
-                <input type="text" class="form-control" name="cliente_id" value="{{ old('cliente_id', $dado->cliente_id ?? '') }}">
+                <label for="cliente_id" class="form-label">Cliente</label>
+                <select name="cliente_id" class="form-select">
+                    <option value="">Selecione</option>
+                    @foreach ($clientes as $cliente)
+                        <option value="{{ $cliente->id }}" {{ (old('cliente_id', $dado->cliente_id ?? '') == $cliente->id) ? 'selected' : '' }}>
+                            {{ $cliente->nome }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="col">
-                <label for="vendedor_id" class="form-label">ID do Vendedor</label>
-                <input type="text" class="form-control" name="vendedor_id"
-                    value="{{ old('vendedor_id', $dado->vendedor_id ?? '') }}">
+                <label for="vendedor_id" class="form-label">Vendedor</label>
+                <select name="vendedor_id" class="form-select">
+                    <option value="">Selecione</option>
+                    @foreach ($vendedores as $vendedor)
+                        <option value="{{ $vendedor->id }}" {{ (old('vendedor_id', $dado->vendedor_id ?? '') == $vendedor->id) ? 'selected' : '' }}>
+                            {{ $vendedor->nome }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="col">
-                <label class="form-label" for="jogo_id">ID do Jogo</label>
-                <input type="text" class="form-control" name="jogo_id" value="{{ old('jogo_id', $dado->jogo_id ?? '') }}">
+                <label class="form-label" for="jogo_id">Jogo</label>
+                <select name="jogo_id" class="form-select">
+                    <option value="">Selecione</option>
+                    @foreach ($jogos as $jogo)
+                        <option value="{{ $jogo->id }}" {{ (old('jogo_id', $dado->jogo_id ?? '') == $jogo->id) ? 'selected' : '' }}>
+                            {{ $jogo->titulo }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="row mt-3">
