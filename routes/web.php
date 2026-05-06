@@ -8,6 +8,7 @@ use App\Http\Controllers\JogoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\VendedorController;
 use App\Http\Controllers\VendaController;
+use App\Http\Controllers\CartaoFidelidadeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,6 +41,9 @@ Route::delete('/jogo/{id}', [JogoController::class, 'destroy'])->name('jogo.dest
 Route::post('/jogo/search', [JogoController::class, 'search'])->name('jogo.search');
 Route::get('jogo/edit/{id}', [JogoController::class, 'edit'])->name('jogo.edit');
 Route::put('jogo/update/{id}', [JogoController::class, 'update'])->name('jogo.update');
+Route::get('jogo/chart', [\App\Http\Controllers\JogoController::class, 'chart'])->name('jogo.chart');
+Route::get('jogo/report', [\App\Http\Controllers\JogoController::class, 'report'])->name('jogo.report');
+Route::get('jogo/reportVendas', [\App\Http\Controllers\JogoController::class, 'reportVendas'])->name('jogo.reportVendas');
 
 Route::get('/cliente', [ClienteController::class, 'index'])->name('cliente.index');
 Route::get('/cliente/create', [ClienteController::class, 'create'])->name('cliente.create');
@@ -64,3 +68,11 @@ Route::delete('/venda/{id}', [VendaController::class, 'destroy'])->name('venda.d
 Route::post('/venda/search', [VendaController::class, 'search'])->name('venda.search');
 Route::get('venda/edit/{id}', [VendaController::class, 'edit'])->name('venda.edit');
 Route::put('venda/update/{id}', [VendaController::class, 'update'])->name('venda.update');
+
+Route::get('/cartao', [CartaoFidelidadeController::class, 'index'])->name('cartao.index');
+Route::get('/cartao/create', [CartaoFidelidadeController::class, 'create'])->name('cartao.create');
+Route::post('/cartao', [CartaoFidelidadeController::class, 'store'])->name('cartao.store');
+Route::delete('/cartao/{id}', [CartaoFidelidadeController::class, 'destroy'])->name('cartao.destroy');
+Route::post('/cartao/search', [CartaoFidelidadeController::class, 'search'])->name('cartao.search');
+Route::get('cartao/edit/{id}', [CartaoFidelidadeController::class, 'edit'])->name('cartao.edit');
+Route::put('cartao/update/{id}', [CartaoFidelidadeController::class, 'update'])->name('cartao.update');

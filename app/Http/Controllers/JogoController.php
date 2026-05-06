@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Jogo;
+use App\Charts\JogosMaisVendidos;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class JogoController extends Controller
 {
@@ -24,7 +26,7 @@ class JogoController extends Controller
         return view('jogo.form');
     }
 
-    function store(Request $request)
+    function validateRequest(Request $request)
     {
         $request->validate([
             'titulo' => 'required',
@@ -32,17 +34,35 @@ class JogoController extends Controller
             'data_lancamento' => 'required',
             'plataforma_id' => 'required',
             'desenvolvedora_id' => 'required',
+            'imagem' => 'nullable|image|mimes:png,jpg,jpeg'
         ], [
-            'titulo' => "O :attribute é obrigatório",
-            'preco' => "O :attribute é obrigatório",
-            'data_lancamento' => "O :attribute é obrigatório",
-            'plataforma_id' => "O :attribute é obrigatório",
-            'desenvolvedora_id' => "O :attribute é obrigatório",
+            'titulo.required' => "O :attribute é obrigatório",
+            'preco.required' => "O :attribute é obrigatório",
+            'data_lancamento.required' => "O :attribute é obrigatório",
+            'plataforma_id.required' => "O :attribute é obrigatório",
+            'desenvolvedora_id.required' => "O :attribute é obrigatório",
+            'imagem.image' => "O :attribute é deve ser enviado",
+            'imagem.mimes' => "O :attribute é deve ser das extensões:PNG, JPEG e JPG",
         ]);
+    }
 
-        Jogo::create($request->all());
+    function store(Request $request)
+    {
+        $this->validateRequest($request);
+        $data = $request->all();
+        $imagem = $request->file('imagem');
 
-        return redirect('jogo');
+        if ($imagem) {
+            $nome_imagem = date('YmdiHs') . "." . $imagem->getClientOriginalExtension();
+            $diretorio = "imagem/jogo/";
+            $imagem->storeAs($diretorio, $nome_imagem, 'public');
+
+            $data['imagem'] = $diretorio . $nome_imagem;
+        }
+
+        Jogo::create($data);
+
+        return redirect('jogo')->with('success', 'Registro cadastrado com sucesso!');
     }
 
     function edit($id)
@@ -53,29 +73,27 @@ class JogoController extends Controller
 
     function update(Request $request, $id)
     {
-        $request->validate([
-            'titulo' => 'required',
-            'preco' => 'required',
-            'data_lancamento' => 'required',
-            'plataforma_id' => 'required',
-            'desenvolvedora_id' => 'required',
-        ], [
-            'titulo' => "O :attribute é obrigatório",
-            'preco' => "O :attribute é obrigatório",
-            'data_lancamento' => "O :attribute é obrigatório",
-            'plataforma_id' => "O :attribute é obrigatório",
-            'desenvolvedora_id' => "O :attribute é obrigatório",
-        ]);
+        $this->validateRequest($request);
+        $data = $request->all();
+        $imagem = $request->file('imagem');
 
-        Jogo::find($id)->update($request->all());
+        if ($imagem) {
+            $nome_imagem = date('YmdiHs') . "." . $imagem->getClientOriginalExtension();
+            $diretorio = "imagem/jogo/";
+            $imagem->storeAs($diretorio, $nome_imagem, 'public');
 
-        return redirect('jogo');
+            $data['imagem'] = $diretorio . $nome_imagem;
+        }
+
+        Jogo::find($id)->update($data);
+
+        return redirect('jogo')->with('success', 'Registro atualizado com sucesso!');
     }
 
     function destroy($id)
     {
         Jogo::destroy($id);
-        return redirect('jogo');
+        return redirect('jogo')->with('success', 'Registro removido com sucesso!');
     }
 
     function search(Request $request)
@@ -91,5 +109,38 @@ class JogoController extends Controller
         }
 
         return view('jogo.list', ['dados' => $dados]);
+    }
+
+    function chart(JogosMaisVendidos $chart)
+    {
+        return view('jogo.chart', ['chart' => $chart->build()]);
+    }
+
+    public function report()
+    {
+        $jogos = Jogo::orderBy('id')->get();
+
+        $data = [
+            'titulo' => 'Relatório Listagem de Jogos',
+            'jogos' => $jogos,
+        ];
+
+        $pdf = Pdf::loadView('jogo.report', $data);
+
+        return $pdf->download('relatorio_listagem_jogos.pdf');
+    }
+
+    public function reportVendas()
+    {
+        $jogos = Jogo::with('vendas.cliente')->orderBy('id')->get();
+
+        $data = [
+            'titulo' => 'Relatório Vendas por Jogo',
+            'jogos' => $jogos,
+        ];
+
+        $pdf = Pdf::loadView('jogo.reportVendas', $data);
+
+        return $pdf->download('relatorio_vendas_por_jogo.pdf');
     }
 }

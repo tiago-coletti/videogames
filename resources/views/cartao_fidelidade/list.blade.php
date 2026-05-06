@@ -1,21 +1,19 @@
 @extends('main')
-@section('titulo', 'Listagem de jogos')
+@section('titulo', 'Listagem de Cartões Fidelidade')
 @section('conteudo')
 
-    <h4>Listagem de Jogos</h4>
+    <h4>Listagem de Cartões Fidelidade</h4>
 
     <div class="row">
         <div class="col">
-            <form action="{{ route('jogo.search') }}" method="post">
+            <form action="{{ route('cartao.search') }}" method="post">
                 @csrf
                 <div class="row">
-
                     <div class="col-md-3">
                         <label class="form-label">Tipo</label>
                         <select name="tipo" class="form-select">
-                            <option value="titulo">Título</option>
-                            <option value="preco">Preço</option>
-                            <option value="data_lancamento">Data de Lançamento</option>
+                            <option value="codigo_cartao">Código</option>
+                            <option value="pontos">Pontos</option>
                         </select>
                     </div>
                     <div class="col-md-3">
@@ -26,7 +24,7 @@
                         <button type="submit" class="btn btn-primary"> Buscar</button>
                     </div>
                     <div class="col-md-3">
-                        <a href="{{ url('jogo/create') }}" class="btn btn-success"> Novo</a>
+                        <a href="{{ url('cartao/create') }}" class="btn btn-success"> Novo</a>
                     </div>
                 </div>
             </form>
@@ -39,35 +37,25 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Imagem</th>
-                        <th scope="col">Título</th>
-                        <th scope="col">Preço</th>
-                        <th scope="col">Data Lançamento</th>
-                        <th scope="col">Plataforma (ID)</th>
-                        <th scope="col">Desenvolvedora (ID)</th>
+                        <th scope="col">Código</th>
+                        <th scope="col">Pontos</th>
+                        <th scope="col">Validade</th>
+                        <th scope="col">Cliente</th>
                         <th scope="col">Ação</th>
                         <th scope="col">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($dados as $item)
-                        @php
-                            $nome_imagem = !empty($item->imagem) ? $item->imagem : 'sem_imagem.png';
-                        @endphp
-
                         <tr>
                             <th scope="row">{{ $item->id }}</th>
-                            <td> <img src="/storage/{{ $nome_imagem }}" class="rounded-circle" width="150px"
-                                    height="150px" alt="imagem">
-                            </td>
-                            <td>{{ $item->titulo }}</td>
-                            <td>{{ $item->preco }}</td>
-                            <td>{{ $item->data_lancamento }}</td>
-                            <td>{{ $item->plataforma_id }}</td>
-                            <td>{{ $item->desenvolvedora_id }}</td>
-                            <td><a href="{{ route('jogo.edit', $item->id) }}" class="btn btn-warning">Editar</a></td>
+                            <td>{{ $item->codigo_cartao }}</td>
+                            <td>{{ $item->pontos }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->data_validade)->format('d/m/Y') }}</td>
+                            <td>{{ $item->cliente->nome ?? 'Sem Cliente' }}</td>
+                            <td><a href="{{ route('cartao.edit', $item->id) }}" class="btn btn-warning">Editar</a></td>
                             <td>
-                                <form action="{{ route('jogo.destroy', $item->id) }}" method="post">
+                                <form action="{{ route('cartao.destroy', $item->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"

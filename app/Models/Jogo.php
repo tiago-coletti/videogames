@@ -13,6 +13,11 @@ class Jogo extends Model
         'preco',
         'data_lancamento',
         'plataforma_id',
-        'desenvolvedora_id'
+        'desenvolvedora_id',
+        'imagem'
     ];
+
+    public function vendas() {
+        return $this->hasMany(Venda::class);
+    }
 }

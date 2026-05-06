@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Venda extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'cliente_id',
         'vendedor_id',
@@ -15,4 +16,19 @@ class Venda extends Model
         'data_venda',
         'valor_total'
     ];
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
+
+    public function vendedor()
+    {
+        return $this->belongsTo(Vendedor::class);
+    }
+
+    public function jogo()
+    {
+        return $this->belongsTo(Jogo::class);
+    }
 }

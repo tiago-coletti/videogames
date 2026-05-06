@@ -14,4 +14,9 @@ class Cliente extends Model
         'password',
         'telefone'
     ];
+
+    public function cartao() {
+    return $this->hasOne(CartaoFidelidade::class);
+    }
 }
+
