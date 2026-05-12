@@ -1,14 +1,14 @@
 @extends('main')
-@section('titulo', 'Formulário Cliente')
+@section('titulo', 'Formulário Cartão Fidelidade')
 @section('conteudo')
 
-    <h4>Formulário Cliente</h4>
+    <h4>Formulário Cartão Fidelidade</h4>
 
     @php
         if (!empty($dado->id)) {
-            $action = route('cliente.update', $dado->id);
+            $action = route('cartao.update', $dado->id);
         } else {
-            $action = route('cliente.store');
+            $action = route('cartao.store');
         }
     @endphp
 
@@ -17,30 +17,45 @@
         @if (!empty($dado->id))
             @method('PUT')
         @endif
+
         <div class="row">
             <input type="hidden" name="id" value="{{ $dado->id ?? '' }}">
             <div class="col">
-                <label for="nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" name="nome" value="{{ old('nome', $dado->nome ?? '') }}">
+                <label for="codigo_cartao" class="form-label">Código do Cartão</label>
+                <input type="text" class="form-control" name="codigo_cartao" value="{{ old('codigo_cartao', $dado->codigo_cartao ?? '') }}">
             </div>
             <div class="col">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" name="email"
-                    value="{{ old('email', $dado->email ?? '') }}">
-            </div>
-            <div class="col">
-                <label class="form-label" for="password">Senha</label>
-                <input type="password" class="form-control" name="password" value="{{ old('password', $dado->password ?? '') }}">
-            </div>
-            <div class="col">
-                <label class="form-label" for="telefone">Telefone</label>
-                <input type="text" class="form-control" name="telefone" value="{{ old('telefone', $dado->telefone ?? '') }}">
+                <label for="pontos" class="form-label">Pontos Acumulados</label>
+                <input type="number" class="form-control" name="pontos" value="{{ old('pontos', $dado->pontos ?? '0') }}">
             </div>
         </div>
-        <div class="row">
+
+        <div class="row mt-3">
+            <div class="col">
+                <label class="form-label" for="data_emissao">Data de Emissão</label>
+                <input type="date" class="form-control" name="data_emissao" value="{{ old('data_emissao', $dado->data_emissao ?? '') }}">
+            </div>
+            <div class="col">
+                <label class="form-label" for="data_validade">Data de Validade</label>
+                <input type="date" class="form-control" name="data_validade" value="{{ old('data_validade', $dado->data_validade ?? '') }}">
+            </div>
+            <div class="col">
+                <label class="form-label" for="cliente_id">Cliente</label>
+                <select name="cliente_id" class="form-select">
+                    <option value="">Selecione um Cliente</option>
+                    @foreach ($clientes as $cliente)
+                        <option value="{{ $cliente->id }}" {{ (old('cliente_id', $dado->cliente_id ?? '') == $cliente->id) ? 'selected' : '' }}>
+                            {{ $cliente->nome }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-3">
             <div class="col">
                 <button type="submit" class="btn btn-success">Salvar</button>
-                <a href="{{ url('cliente') }}" class="btn btn-primary">Voltar</a>
+                <a href="{{ url('cartao') }}" class="btn btn-primary">Voltar</a>
             </div>
         </div>
     </form>

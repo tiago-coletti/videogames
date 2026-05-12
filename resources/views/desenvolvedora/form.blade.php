@@ -12,7 +12,7 @@
         }
     @endphp
 
-    <form action="{{ $action }}" method="POST">
+    <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if (!empty($dado->id))
             @method('PUT')
@@ -43,6 +43,19 @@
                 <input type="text" class="form-control" name="numero_funcionarios" value="{{ old('numero_funcionarios', $dado->numero_funcionarios ?? '') }}">
             </div>
         </div>
+
+        <div class="row mt-3">
+            <div class="col">
+                <label class="form-label" for="imagem">Imagem/Logo da Desenvolvedora</label>
+                @php
+                    $nome_imagem = !empty($dado->imagem) ? $dado->imagem : 'sem_imagem.png';
+                @endphp
+                <br>
+                <img src="{{ asset('storage/' . $nome_imagem) }}" class="rounded-circle mb-2" width="150px" height="150px" alt="imagem">
+                <input type="file" name="imagem" class="form-control">
+            </div>
+        </div>
+
         <div class="row mt-3">
             <div class="col">
                 <button type="submit" class="btn btn-success">Salvar</button>

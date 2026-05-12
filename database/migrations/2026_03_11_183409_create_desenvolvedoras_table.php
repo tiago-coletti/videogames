@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('ano_fundacao');
             $table->string('site_oficial', 150)->nullable();
             $table->integer('numero_funcionarios')->default(0);
+            $table->string('imagem', 255)->nullable(); // Adicione isso aqui
             $table->timestamps();
         });
     }

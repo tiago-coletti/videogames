@@ -4,26 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Jogo;
+use App\Models\Plataforma;
+use App\Models\Desenvolvedora;
 use App\Charts\JogosMaisVendidos;
+use App\Charts\VendasPorDesenvolvedora;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class JogoController extends Controller
 {
-
     function index()
     {
-        $dados = Jogo::all(); //select * from jogos
-
-        // dd($dados);
-        //var_dump($dados);
-        //  exit;
-
+        $dados = Jogo::all();
         return view('jogo.list', ['dados' => $dados]);
     }
 
     function create()
     {
-        return view('jogo.form');
+        $plataformas = Plataforma::orderBy('nome')->get();
+        $desenvolvedoras = Desenvolvedora::orderBy('nome')->get();
+
+        return view('jogo.form', compact('plataformas', 'desenvolvedoras'));
     }
 
     function validateRequest(Request $request)
@@ -68,7 +68,10 @@ class JogoController extends Controller
     function edit($id)
     {
         $dado = Jogo::find($id);
-        return view('jogo.form', ['dado' => $dado]);
+        $plataformas = Plataforma::orderBy('nome')->get();
+        $desenvolvedoras = Desenvolvedora::orderBy('nome')->get();
+
+        return view('jogo.form', compact('dado', 'plataformas', 'desenvolvedoras'));
     }
 
     function update(Request $request, $id)
@@ -111,11 +114,13 @@ class JogoController extends Controller
         return view('jogo.list', ['dados' => $dados]);
     }
 
-    function chart(JogosMaisVendidos $chart)
-    {
-        return view('jogo.chart', ['chart' => $chart->build()]);
-    }
-
+public function chart(JogosMaisVendidos $chart1, VendasPorDesenvolvedora $chart2)
+{
+    return view('jogo.chart', [
+        'chart1' => $chart1->build(),
+        'chart2' => $chart2->build(),
+    ]);
+}
     public function report()
     {
         $jogos = Jogo::orderBy('id')->get();

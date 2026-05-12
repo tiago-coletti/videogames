@@ -10,12 +10,7 @@ class DesenvolvedoraController extends Controller
 
     function index()
     {
-        $dados = Desenvolvedora::all(); //select * from desenvolvedoras
-
-        // dd($dados);
-        //var_dump($dados);
-        //  exit;
-
+        $dados = Desenvolvedora::all();
         return view('desenvolvedora.list', ['dados' => $dados]);
     }
 
@@ -24,21 +19,43 @@ class DesenvolvedoraController extends Controller
         return view('desenvolvedora.form');
     }
 
-    function store(Request $request)
+    function validateRequest(Request $request)
     {
         $request->validate([
             'nome' => 'required',
             'pais' => 'required',
             'ano_fundacao' => 'required',
+            'imagem' => 'nullable|image|mimes:png,jpg,jpeg'
         ], [
             'nome' => "O :attribute é obrigatório",
             'pais' => "O :attribute é obrigatório",
             'ano_fundacao' => "O :attribute é obrigatório",
+            'imagem.image' => "O :attribute deve ser uma imagem",
+            'imagem.mimes' => "O :attribute deve ser das extensões: PNG, JPEG ou JPG",
         ]);
+    }
 
-        Desenvolvedora::create($request->all());
+    function store(Request $request)
+    {
+        $this->validateRequest($request);
+        $data = $request->all();
+        $imagem = $request->file('imagem');
 
-        return redirect('desenvolvedora');
+    if ($imagem) {
+        $obj = Desenvolvedora::findOrFail($id);
+        if($obj->imagem){
+            \Storage::disk('public')->delete($obj->imagem);
+        }
+
+    $nome_imagem = date('YmdiHs') . "." . $imagem->getClientOriginalExtension();
+    $diretorio = "imagem/desenvolvedora/";
+    $imagem->storeAs($diretorio, $nome_imagem, 'public');
+    $data['imagem'] = $diretorio . $nome_imagem;
+}
+
+        Desenvolvedora::create($data);
+
+        return redirect('desenvolvedora')->with('success', 'Registro cadastrado com sucesso!');
     }
 
     function edit($id)
@@ -49,25 +66,26 @@ class DesenvolvedoraController extends Controller
 
     function update(Request $request, $id)
     {
-        $request->validate([
-            'nome' => 'required',
-            'pais' => 'required',
-            'ano_fundacao' => 'required',
-        ], [
-            'nome' => "O :attribute é obrigatório",
-            'pais' => "O :attribute é obrigatório",
-            'ano_fundacao' => "O :attribute é obrigatório",
-        ]);
+        $this->validateRequest($request);
+        $data = $request->all();
+        $imagem = $request->file('imagem');
 
-        Desenvolvedora::find($id)->update($request->all());
+        if ($imagem) {
+            $nome_imagem = date('YmdiHs') . "." . $imagem->getClientOriginalExtension();
+            $diretorio = "imagem/desenvolvedora/";
+            $imagem->storeAs($diretorio, $nome_imagem, 'public');
+            $data['imagem'] = $diretorio . $nome_imagem;
+        }
 
-        return redirect('desenvolvedora');
+        Desenvolvedora::find($id)->update($data);
+
+        return redirect('desenvolvedora')->with('success', 'Registro atualizado com sucesso!');
     }
 
     function destroy($id)
     {
         Desenvolvedora::destroy($id);
-        return redirect('desenvolvedora');
+        return redirect('desenvolvedora')->with('success', 'Registro removido com sucesso!');
     }
 
     function search(Request $request)

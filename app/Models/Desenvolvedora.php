@@ -14,6 +14,8 @@ class Desenvolvedora extends Model
         'pais',
         'ano_fundacao',
         'site_oficial',
-        'numero_funcionarios'  
+        'numero_funcionarios',
+        'imagem'
+
     ];
 }

@@ -1,43 +1,52 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('titulo') - SIG ACAD</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('titulo')</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 <body>
-    <!-- header> -->
-    <header>
-    </header>
-    <!-- principal-->
-    <main>
-        <div class="container mt-4">
-            <div class="row">
-                @if ($errors->any())
-                    <p>Por favor, verifique os erros abaixo</p>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
-            <div class="row">
-                @yield('conteudo')
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url('/') }}">Loja de Videogames</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('jogo.index') }}">Jogos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('desenvolvedora.index') }}">Desenvolvedoras</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('plataforma.index') }}">Plataformas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('cliente.index') }}">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('vendedor.index') }}">Vendedores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('venda.index') }}">Vendas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('cartao.index') }}">Cartões Fidelidade</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </main>
+    </nav>
 
-    <!-- footer-->
-    <footer>
+    <div class="container">
+        @yield('conteudo')
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
-        </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

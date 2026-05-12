@@ -41,6 +41,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Logo/Imagem</th>
                         <th scope="col">Nome</th>
                         <th scope="col">País</th>
                         <th scope="col">Ano de Fundação</th>
@@ -52,8 +53,14 @@
                 </thead>
                 <tbody>
                     @foreach ($dados as $item)
+                        @php
+                            $nome_imagem = !empty($item->imagem) ? $item->imagem : 'sem_imagem.png';
+                        @endphp
                         <tr>
                             <th scope="row">{{ $item->id }}</th>
+                            <td>
+                                <img src="/storage/{{ $nome_imagem }}" class="rounded-circle" width="100px" height="100px" alt="imagem">
+                            </td>
                             <td>{{ $item->nome }}</td>
                             <td>{{ $item->pais }}</td>
                             <td>{{ $item->ano_fundacao }}</td>

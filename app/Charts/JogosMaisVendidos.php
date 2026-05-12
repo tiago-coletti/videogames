@@ -14,7 +14,7 @@ class JogosMaisVendidos
         $this->chart = $chart;
     }
 
-    public function build(): \ArielMejiaDev\LarapexCharts\PieChart
+    public function build(): \ArielMejiaDev\LarapexCharts\BarChart
     {
 
         /*
@@ -38,8 +38,8 @@ class JogosMaisVendidos
             $nomeJogos[] = $item->titulo;
         }
 
-        return $this->chart->pieChart()
-            ->setTitle('QTD Vendas por Jogo')
+        return $this->chart->barChart()
+            ->setTitle('Quantidade de Vendas por Jogo')
             ->setSubtitle('Semestre 2026.1')
             ->addData($qtdVendas)
             ->setLabels($nomeJogos);
